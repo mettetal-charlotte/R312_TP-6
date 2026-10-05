@@ -11,12 +11,23 @@ import "../styles/global.css";
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
-  <body>
-    <nav>
+ <body>
+  <ul class="flex list-none p-0 mb-4">
+    <li class="m-2">
+      <a href="/">Accueil</a>
+    </li>
+    <li class="m-2">
       <a href="/cars">Voitures</a>
-    </nav>
-    <slot />
-  </body>
+    </li>
+    <li class="m-2">
+      <a href="/rendu-dynamique">Penguins</a>
+    </li>
+    <li class="m-2">
+      <a href="/rendu-statique">Penguins statique</a>
+    </li>
+  </ul>
+  <slot />
+</body>
 </html>
 
 <style>

@@ -1,0 +1,48 @@
+---
+import penguins from "../../../assets/penguins.json";
+import PlotFigure from "../../../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import Layout from "../../../layouts/Layout.astro";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+    const speciesList = [...new Set(penguins.map((p) => p.species))].sort();
+    return speciesList.map((s) => ({ params: { species: s.toString() } }));
+}
+
+const { species } = Astro.params;
+
+const filteredPenguins = penguins.filter(
+    (p) => p.species.toString() === species,
+);
+
+const plotOptions = {
+    grid: true,
+    marks: [
+        Plot.dot(filteredPenguins, {
+            x: "culmen_length_mm",
+            y: "culmen_depth_mm",
+            fill: "species",
+            r: 4,
+            fillOpacity: 0.7,
+        }),
+    ],
+    x: {
+        label: "Longueur du bec (mm)",
+    },
+    y: {
+        label: "Profondeur du bec (mm)",
+    },
+    title: `Relation Longueur & profondeur du bec - Penguins ${species}`,
+};
+---
+
+<Layout>
+    <h1 class="m-2">Pingouins de l'espèce {species}</h1>
+    <p class="m-2">
+        {filteredPenguins.length} pingouin(s) trouvé(s) pour l'espèce {species}
+    </p>
+
+    <PlotFigure options={plotOptions} />
+</Layout>

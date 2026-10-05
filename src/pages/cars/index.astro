@@ -5,13 +5,13 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout>
-<ul>
-    {
-        years.map((y) => (
-            <li>
-                <a href={`/cars/year/${y}`}>Année : {y}</a>
-            </li>
-        ))
-    }
-</ul>
+    <ul>
+        {
+            years.map((y) => (
+                <li class="m-4">
+                    <a href={`/cars/year/${y}`}>Année : {y}</a>
+                </li>
+            ))
+        }
+    </ul>
 </Layout>

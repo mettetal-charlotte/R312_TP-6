@@ -1,0 +1,39 @@
+---
+import penguins from "../../../assets/penguins.json";
+export const prerender = false;
+import PlotFigure from "../../../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import Layout from "../../../layouts/Layout.astro";
+const { species: specie } = Astro.params;
+// Filtrer les voitures pour l'année spécifiée
+const filteredPenguins = penguins.filter(
+    (penguin) => penguin.species.toString() === specie,
+);
+// Configuration du graphique
+const plotOptions = {
+    grid: true,
+    marks: [
+        Plot.dot(filteredPenguins, {
+            x: "culmen_length_mm",
+            y: "culmen_depth_mm",
+            fill: "species",
+            r: 4,
+            fillOpacity: 0.7,
+        }),
+    ],
+    x: {
+        label: "Longueur du bec (mm)",
+    },
+    y: {
+        label: "Profondeur du bec (mm)",
+    },
+    title: `Relation Longueur & profondeur du bec - Penguins ${specie}`,
+};
+---
+
+<Layout>
+    <h1>Penguins de la race {specie}</h1>
+    <p>{filteredPenguins.length} penguins trouvé pour la race {specie}</p>
+
+    <PlotFigure options={plotOptions} />
+</Layout>

@@ -1,0 +1,17 @@
+---
+import penguins from "../../assets/penguins.json";
+const species = [...new Set(penguins.map((p) => p.species))].sort();
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+    <ul>
+        {
+            species.map((p) => (
+                <li class="m-4">
+                    <a href={`/rendu-dynamique/specie/${p}`}>Penguins : {p}</a>
+                </li>
+            ))
+        }
+    </ul>
+</Layout>
