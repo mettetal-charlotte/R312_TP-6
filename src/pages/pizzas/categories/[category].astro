@@ -1,0 +1,37 @@
+---
+import pizzas from "../../../assets/pizza.json";
+export const prerender = false;
+import PlotFigure from "../../../components/PlotFigure.astro";
+import * as Plot from "@observablehq/plot";
+import Layout from "../../../layouts/Layout.astro";
+
+const { category } = Astro.params;
+const filteredPizzas = pizzas.filter((pizza) => pizza.category === category);
+
+const plotOptions = {
+	grid: true,
+	marks: [
+		Plot.dot(filteredPizzas, {
+			x: "price",
+			y: "revenue",
+			fill: "name",
+			r: 4,
+			fillOpacity: 0.7,
+		}),
+	],
+	x: {
+		label: "Prix ($)",
+	},
+	y: {
+		label: "Revenu ($)",
+	},
+	title: `Prix et revenus des pizzas - ${category}`,
+};
+---
+
+<Layout>
+	<h1>Pizzas de la catégorie {category}</h1>
+	<p>{filteredPizzas.length} vente(s) trouvée(s) pour la catégorie {category}</p>
+
+	<PlotFigure options={plotOptions} />
+</Layout>

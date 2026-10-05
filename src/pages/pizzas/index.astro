@@ -1,0 +1,20 @@
+---
+import pizzas from "../../assets/pizza.json";
+import Layout from "../../layouts/Layout.astro";
+
+const categories = [...new Set(pizzas.map((pizza) => pizza.category))].sort();
+---
+
+<Layout>
+    <ul>
+        {
+            categories.map((category) => (
+                <li class="m-4">
+                    <a href={`/pizzas/categories/${category}`}>
+                        Categorie : {category}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</Layout>
